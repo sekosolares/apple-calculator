@@ -1,0 +1,300 @@
+:root {
+  /* Colors */
+  --primary: #6c63ff;
+  --primary-dark: #5a52d3;
+  --primary-light: #8a85ff;
+  --secondary: #a363ff;
+  --text-dark: #2c3e50;
+  --text-light: #6c757d;
+  --bg-color: #e6e9f0;
+  --shadow-light: #ffffff;
+  --shadow-dark: #b8b9be;
+  --success: #4caf50;
+  --danger: #f44336;
+  --warning: #ff9800;
+  --info: #2196f3;
+  
+  /* Calculator specific */
+  --display-bg: #f0f2f7;
+  --button-bg: var(--bg-color);
+  --button-text: var(--text-dark);
+  --button-hover: rgba(108, 99, 255, 0.1);
+  --display-text: var(--text-dark);
+  --display-secondary-text: var(--text-light);
+  
+  /* Status bar */
+  --status-bar: rgba(230, 233, 240, 0.8);
+  --status-text: var(--text-dark);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bg-color);
+  background: linear-gradient(135deg, #1a1a1c 0%, #000000 100%);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Icons', 'Helvetica Neue', Arial, sans-serif;
+  color: white;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* iOS Status Bar */
+.status-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 15px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--status-text);
+  z-index: 100;
+  background: var(--status-bar);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.status-bar__left {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.status-bar__time {
+  font-weight: 600;
+}
+
+.status-bar__right {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.calculator {
+  width: 100%;
+  max-width: 375px;
+  margin: 0 auto;
+  padding: 25px;
+  border-radius: 30px;
+  background: var(--bg-color);
+  box-shadow:  20px 20px 60px var(--shadow-dark),
+              -20px -20px 60px var(--shadow-light);
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.display {
+  padding: 25px;
+  text-align: right;
+  margin-bottom: 30px;
+  background: var(--display-bg);
+  border-radius: 20px;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  box-shadow: inset 4px 4px 8px var(--shadow-dark),
+              inset -4px -4px 8px var(--shadow-light);
+  position: relative;
+  overflow: hidden;
+  border: none;
+}
+
+.previous-operand {
+  font-size: 1.2rem;
+  color: var(--text-light);
+  min-height: 1.5rem;
+  margin-bottom: 8px;
+  word-wrap: break-word;
+  word-break: break-all;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+.current-operand {
+  font-size: 3.5rem;
+  font-weight: 600;
+  word-wrap: break-word;
+  word-break: break-all;
+  color: var(--text-dark);
+  letter-spacing: -1px;
+  line-height: 1.1;
+  margin-top: 5px;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.buttons-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  position: relative;
+  width: 100%;
+  max-width: 375px;
+  margin: 0 auto;
+}
+
+button {
+  border: none;
+  border-radius: 20px;
+  width: 70px;
+  height: 70px;
+  font-size: 1.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease;
+  color: var(--text-dark);
+  background: var(--bg-color);
+  box-shadow: 5px 5px 10px var(--shadow-dark),
+              -5px -5px 10px var(--shadow-light);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+}
+
+button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  border-radius: 20px;
+}
+
+button:active {
+  box-shadow: inset 3px 3px 6px var(--shadow-dark),
+              inset -3px -3px 6px var(--shadow-light);
+}
+
+button:active::after {
+  opacity: 1;
+}
+
+button:active {
+  transform: scale(0.96);
+  transition: transform 0.1s ease, opacity 0.1s ease;
+}
+
+button.span-two {
+  grid-column: span 2;
+  width: 100%;
+  border-radius: 20px;
+  justify-content: flex-start;
+  padding-left: 30px;
+}
+
+/* Adjust the zero button to span two columns */
+button.span-two-zero {
+  grid-column: 2 / span 2;
+  width: 100%;
+  border-radius: 20px;
+  justify-content: flex-start;
+  padding-left: 30px;
+  margin-left: -12px; /* Compensate for grid gap */
+}
+
+/* Style for the backspace button */
+button.backspace {
+  font-size: 1.5rem;
+  line-height: 1;
+  padding-top: 4px; /* Adjust vertical alignment */
+}
+
+button.gray {
+  color: var(--text-light);
+  background: var(--bg-color);
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+button.gray:active {
+  color: var(--primary);
+}
+
+button.orange {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 500;
+  box-shadow: 5px 5px 10px var(--shadow-dark),
+              -5px -5px 10px var(--shadow-light),
+              inset 2px 2px 4px rgba(255, 255, 255, 0.2);
+  transition: all 0.2s ease;
+}
+
+button.orange:active {
+  box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.2),
+              inset -3px -3px 6px rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+button.dark-gray {
+  color: var(--text-dark);
+  background: var(--bg-color);
+  transition: all 0.2s ease;
+}
+
+button.dark-gray:active {
+  color: var(--primary);
+}
+
+/* Responsive adjustments */
+@media (max-width: 400px) {
+  .calculator {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    padding: 15px;
+    box-shadow: none;
+  }
+  
+  .display {
+    padding: 20px;
+    min-height: 100px;
+    margin-bottom: 20px;
+  }
+  
+  .current-operand {
+    font-size: 2.8rem;
+  }
+  
+  button {
+    width: calc(25vw - 18px);
+    height: calc(25vw - 18px);
+    max-width: 65px;
+    max-height: 65px;
+    font-size: 1.3rem;
+    border-radius: 18px;
+  }
+  
+  button[style*="grid-column: '1 / span 2'"],
+  button.span-two {
+    width: calc(50vw - 22px);
+    max-width: 145px;
+    border-radius: 18px;
+  }
+  
+  button.span-two-zero {
+    margin-left: -15px;
+  }
+  
+  .buttons-grid {
+    gap: 12px;
+  }
+}
