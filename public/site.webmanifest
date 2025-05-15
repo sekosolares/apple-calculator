@@ -2,7 +2,7 @@
   "name": "Apple Calculator",
   "short_name": "Calculator",
   "description": "A beautiful calculator inspired by Apple's design",
-  "start_url": "/",
+  "start_url": "https://sekosolares.github.io/apple-calculator",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
